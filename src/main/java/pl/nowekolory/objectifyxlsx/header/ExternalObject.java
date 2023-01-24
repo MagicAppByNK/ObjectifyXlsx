@@ -7,8 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface ReportHeader{
-    String name();
-
-    int position() default -1;
+public @interface ExternalObject{
+    Class<?> className();
 }

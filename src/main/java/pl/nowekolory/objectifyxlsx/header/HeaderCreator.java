@@ -36,7 +36,10 @@ public class HeaderCreator{
         var headerClassFields = clazz.getDeclaredFields();
         var headerList = new ArrayList<String>();
         for(var field : headerClassFields){
-            if(field.isAnnotationPresent(ReportHeader.class)){
+            if(field.isAnnotationPresent(ExternalObject.class)){
+                var externalObject = field.getAnnotation(ExternalObject.class);
+                headerList.addAll(getHeaderValues(externalObject.className()));
+            }else if(field.isAnnotationPresent(ReportHeader.class)){
                 headerList.add(field.getAnnotation(ReportHeader.class).name());
             }
         }
