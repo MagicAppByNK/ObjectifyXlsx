@@ -32,6 +32,8 @@ public class CellCreator{
             addCellWithInteger(row, (Integer) value, cellIndex);
         }else if(value instanceof Double){
             addCellWithDouble(row, (Double) value, cellIndex);
+        }else if(value instanceof Long){
+            addCellWithLong(row, (Long) value, cellIndex);
         }else if(value instanceof LocalDateTime){
             addCellWithLocalDateTime(dateTimeStyle, row, (LocalDateTime) value, cellIndex);
         }else if(value instanceof LocalDate){
@@ -55,6 +57,10 @@ public class CellCreator{
     }
 
     private void addCellWithDouble(Row row, Double value, Integer cellIndex){
+        row.createCell(cellIndex).setCellValue(value);
+    }
+
+    private void addCellWithLong(Row row, Long value, Integer cellIndex){
         row.createCell(cellIndex).setCellValue(value);
     }
 
