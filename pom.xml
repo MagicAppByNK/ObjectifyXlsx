@@ -63,10 +63,5 @@
             <id>central</id>
             <url>http://repository.axinf.com:8081/repository/maven-public/</url>
         </repository>
-        <repository>
-            <id>maven_central</id>
-            <name>Maven Central</name>
-            <url>https://repo.maven.apache.org/maven2/</url>
-        </repository>
     </repositories>
 </project>
