@@ -40,7 +40,6 @@ public class ExcelWriter{
 
     public void createSheet(List<?> objectsToWrite, String name){
         if(objectsToWriteNotExist(objectsToWrite)){
-            logger.error("No data to write");
             return;
         }
 
