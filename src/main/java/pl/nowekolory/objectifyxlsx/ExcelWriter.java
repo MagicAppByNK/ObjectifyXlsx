@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
 import pl.nowekolory.objectifyxlsx.cell.CellStyleCreator;
 import pl.nowekolory.objectifyxlsx.header.HeaderCreator;
 import pl.nowekolory.objectifyxlsx.row.RowCreator;
@@ -49,6 +50,50 @@ public class ExcelWriter{
 
         HeaderCreator.createHeader(sheet, workbook, objectsToWriteClazz);
         createRows(sheet, objectsToWrite);
+    }
+    public void resizeColumns(Workbook wb){
+        if(wb == null){
+            return;
+        }
+        var numberOfSheets = wb.getNumberOfSheets();
+        if(numberOfSheets == 0){
+            return;
+        }
+        for(var i = 0; i < numberOfSheets; i++){
+            var sheet = wb.getSheetAt(i);
+            var numberOfColumns = getNumberOfColumns(sheet);
+            for(var j = 0; j < numberOfColumns; j++){
+                if (sheet instanceof SXSSFSheet) {
+                    ((SXSSFSheet) sheet).trackColumnForAutoSizing(j);
+                }
+                sheet.autoSizeColumn(j);
+            }
+        }
+    }
+    private short getNumberOfColumns(Sheet sheet){
+        var row = sheet.getRow(0);
+        if(row == null){
+            return getNumberOfColumnsInLongestRow(sheet);
+        }
+        var numberOfColumns = row.getLastCellNum();
+        if(numberOfColumns == 0){
+            return getNumberOfColumnsInLongestRow(sheet);
+        }
+        return row.getLastCellNum();
+    }
+    private short getNumberOfColumnsInLongestRow(Sheet sheet){
+        var lastRow = sheet.getLastRowNum();
+        var numberOfColumns = (short)0;
+        for(var i = 0; i < lastRow; i++){
+            var row = sheet.getRow(i);
+            if(row != null){
+                var currentRowColumnsNumber = row.getLastCellNum();
+                if(currentRowColumnsNumber > numberOfColumns){
+                    numberOfColumns = currentRowColumnsNumber;
+                }
+            }
+        }
+        return numberOfColumns;
     }
 
     private String getSheetName(Class<?> clazz, String name){

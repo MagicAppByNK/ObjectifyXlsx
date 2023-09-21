@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.streaming.SXSSFSheet;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -63,11 +62,6 @@ public class CellCreator {
         if (cellStyle != null) {
             row.getCell(cellIndex).setCellStyle(cellStyle);
         }
-        var sheet = row.getSheet();
-        if (sheet instanceof SXSSFSheet) {
-            ((SXSSFSheet) sheet).trackColumnForAutoSizing(cellIndex);
-        }
-        row.getSheet().autoSizeColumn(cellIndex);
     }
 
     private void addEmptyCell(Row row, Integer cellIndex, CellStyle cellStyle) {
