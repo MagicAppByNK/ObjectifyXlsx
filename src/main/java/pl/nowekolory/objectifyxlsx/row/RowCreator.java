@@ -7,7 +7,6 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import pl.nowekolory.objectifyxlsx.cell.CellCreator;
 import pl.nowekolory.objectifyxlsx.cell.CellParameters;
-import pl.nowekolory.objectifyxlsx.cell.CellStyleCreator;
 import pl.nowekolory.objectifyxlsx.header.ExternalObject;
 import pl.nowekolory.objectifyxlsx.header.ReportHeader;
 
@@ -27,26 +26,21 @@ public class RowCreator{
         this.cellCreator = new CellCreator(dateTimeStyle, dateStyle);
     }
 
-    public void createRow(Row row, Object objectToWrite){
+    public void createRow(Row row, Object objectToWrite, CellStyle cellStyle){
         cellIndex = 0;
-        var cellParameters = CellParameters.builder()
-                .boldFont(false)
-                .horizontalAlignment(HorizontalAlignment.RIGHT)
-                .roundDouble(true)
-                .build();
-        createRowWithCellParameters(row, objectToWrite, cellParameters);
+        createRowWithCellParameters(row, objectToWrite, cellStyle);
     }
-    public void createRowWithCellParameters(Row row, Object objectToWrite, CellParameters cellParameters){
+    public void createRowWithCellParameters(Row row, Object objectToWrite, CellStyle cellStyle){
         cellIndex = 0;
-        createCellsFromFields(fields, row, objectToWrite, cellParameters);
+        createCellsFromFields(fields, row, objectToWrite, cellStyle);
     }
 
-    private void createCellsFromFields(Field[] fields, Row row, Object objectToWrite, CellParameters cellParameters){
+    private void createCellsFromFields(Field[] fields, Row row, Object objectToWrite, CellStyle cellStyle){
         for(var field : fields){
             field.setAccessible(true);
             try{
                 var value = getValue(objectToWrite, field);
-                checkForIterableAndCreateCells(field, value, row, cellParameters);
+                checkForIterableAndCreateCells(field, value, row, cellStyle);
             }catch(IllegalAccessException e){
                 logger.error(e.getMessage());
             }
@@ -60,30 +54,29 @@ public class RowCreator{
         return field.get(object);
     }
 
-    private void checkForIterableAndCreateCells(Field field, Object value, Row row, CellParameters cellParameters){
+    private void checkForIterableAndCreateCells(Field field, Object value, Row row, CellStyle cellStyle){
         if(Iterable.class.isAssignableFrom(field.getDeclaringClass()) && value != null){
             for(var element : (Iterable<?>) value){
-                createCells(field, element, row, cellParameters);
+                createCells(field, element, row, cellStyle);
             }
         }else{
-            createCells(field, value, row, cellParameters);
+            createCells(field, value, row, cellStyle);
         }
     }
 
-    private void createCells(Field field, Object value, Row row, CellParameters cellParameters){
+    private void createCells(Field field, Object value, Row row, CellStyle cellStyle){
         if(field.isAnnotationPresent(ExternalObject.class)){
             var externalObject = field.getAnnotation(ExternalObject.class);
             var externalObjectClass = externalObject.className();
             var externalObjectFields = getReportFields(externalObjectClass);
-            createCellsFromFields(externalObjectFields, row, value,cellParameters);
+            createCellsFromFields(externalObjectFields, row, value,cellStyle);
         }else{
-            createCell(row, value, cellParameters);
+            createCell(row, value, cellStyle);
         }
     }
 
-    private void createCell(Row row, Object value, CellParameters cellParameters){
+    private void createCell(Row row, Object value, CellStyle cellStyle){
         if(value != null){
-            var cellStyle = CellStyleCreator.createFormatedCellStyle(row.getSheet().getWorkbook(), cellParameters.getRoundDouble(), cellParameters.getHorizontalAlignment(), cellParameters.getBoldFont());
             cellCreator.addCell(row, value, cellIndex, cellStyle);
         }
         cellIndex++;
