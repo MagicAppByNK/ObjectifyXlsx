@@ -3,10 +3,8 @@ package pl.nowekolory.objectifyxlsx.row;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import pl.nowekolory.objectifyxlsx.cell.CellCreator;
-import pl.nowekolory.objectifyxlsx.cell.CellParameters;
 import pl.nowekolory.objectifyxlsx.header.ExternalObject;
 import pl.nowekolory.objectifyxlsx.header.ReportHeader;
 
