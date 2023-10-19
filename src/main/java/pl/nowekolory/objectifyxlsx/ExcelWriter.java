@@ -74,7 +74,7 @@ public class ExcelWriter{
             return getNumberOfColumnsInLongestRow(sheet);
         }
         var numberOfColumns = row.getLastCellNum();
-        if(numberOfColumns == 0){
+        if(numberOfColumns <= 1){
             return getNumberOfColumnsInLongestRow(sheet);
         }
         return row.getLastCellNum();
