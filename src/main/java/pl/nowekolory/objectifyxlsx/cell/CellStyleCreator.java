@@ -1,6 +1,7 @@
 package pl.nowekolory.objectifyxlsx.cell;
 
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 
 public class CellStyleCreator{
@@ -10,6 +11,20 @@ public class CellStyleCreator{
 
     public static CellStyle createDefaultCellStyle(Workbook workbook){
         return workbook.createCellStyle();
+    }
+    public static CellStyle createFormatedCellStyle(Workbook workbook, Boolean roundDouble, HorizontalAlignment horizontalAlignment, Boolean boldFont){
+        var cellStyle = workbook.createCellStyle();
+        cellStyle.setAlignment(horizontalAlignment);
+        if(boldFont){
+            var font = workbook.createFont();
+            font.setBold(true);
+            cellStyle.setFont(font);
+        }
+        if(roundDouble){
+            var format = workbook.getCreationHelper().createDataFormat().getFormat("0.00");
+            cellStyle.setDataFormat(format);
+        }
+        return cellStyle;
     }
     public static CellStyle createDateTimeCellStyle(Workbook workbook, String format){
         var dateTimeCellStyle = workbook.createCellStyle();
@@ -32,6 +47,7 @@ public class CellStyleCreator{
         var font = workbook.createFont();
         font.setBold(true);
         cellStyle.setFont(font);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
         return cellStyle;
     }
 
