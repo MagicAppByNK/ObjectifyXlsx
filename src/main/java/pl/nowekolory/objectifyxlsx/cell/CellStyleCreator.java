@@ -6,8 +6,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 public class CellStyleCreator{
 
-    private static final String defaultDateFormat = "dd.MM.yyyy";
-    private static final String defaultDateTimeFormat = "dd.MM.yyyy h:mm";
+    private static final String defaultDateFormat = "m/d/yy";
+    private static final String defaultDateTimeFormat = "m/d/yy h:mm";
 
     public static CellStyle createDefaultCellStyle(Workbook workbook){
         return workbook.createCellStyle();
