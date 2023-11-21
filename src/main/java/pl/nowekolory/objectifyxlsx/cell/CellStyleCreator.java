@@ -3,11 +3,14 @@ package pl.nowekolory.objectifyxlsx.cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.DateFormatConverter;
+
+import java.util.Locale;
 
 public class CellStyleCreator{
 
-    private static final String defaultDateFormat = "m/d/yy";
-    private static final String defaultDateTimeFormat = "m/d/yy h:mm";
+    private static final String defaultDateFormat = "M.d.yy";
+    private static final String defaultDateTimeFormat = "M.d.yy h:mm";
 
     public static CellStyle createDefaultCellStyle(Workbook workbook){
         return workbook.createCellStyle();
@@ -36,7 +39,7 @@ public class CellStyleCreator{
 
     public static CellStyle createDateCellStyle(Workbook workbook, String format){
         var dateCellStyle = workbook.createCellStyle();
-        var stringFormat = getFormat(format, defaultDateFormat);
+        var stringFormat = getFormat(format, DateFormatConverter.convert(Locale.getDefault(), "dd.MM.yyyy"));
         var dateFormat = workbook.getCreationHelper().createDataFormat().getFormat(stringFormat);
         dateCellStyle.setDataFormat(dateFormat);
         return dateCellStyle;

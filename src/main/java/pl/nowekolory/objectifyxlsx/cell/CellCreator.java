@@ -3,6 +3,7 @@ package pl.nowekolory.objectifyxlsx.cell;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 
 import java.time.LocalDate;
@@ -59,9 +60,6 @@ public class CellCreator {
         } else {
             logger.error("No cell creator for given value class: {}", value.getClass());
         }
-        if (cellStyle != null) {
-            row.getCell(cellIndex).setCellStyle(cellStyle);
-        }
     }
 
     private void addEmptyCell(Row row, Integer cellIndex, CellStyle cellStyle) {
@@ -110,7 +108,7 @@ public class CellCreator {
     }
 
     private void addCell(CellStyle cellStyle, Row row, LocalDate value, Integer cellIndex) {
-        var cell = row.createCell(cellIndex);
+        var cell = row.createCell(cellIndex, CellType.NUMERIC);
         cell.setCellValue(value);
         cell.setCellStyle(cellStyle);
     }
