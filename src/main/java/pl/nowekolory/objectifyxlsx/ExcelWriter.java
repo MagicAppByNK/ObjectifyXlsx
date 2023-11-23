@@ -1,9 +1,6 @@
 package pl.nowekolory.objectifyxlsx;
 
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import pl.nowekolory.objectifyxlsx.cell.CellParameters;
 import pl.nowekolory.objectifyxlsx.cell.CellStyleCreator;
@@ -49,22 +46,27 @@ public class ExcelWriter{
         HeaderCreator.createHeader(sheet, workbook, objectsToWriteClazz);
         createRows(sheet, objectsToWrite);
     }
-    public void resizeColumns(Workbook wb){
-        if(wb == null){
+    public void resizeColumns(){
+        if(workbook == null){
             return;
         }
-        var numberOfSheets = wb.getNumberOfSheets();
-        if(numberOfSheets == 0){
-            return;
-        }
-        for(var i = 0; i < numberOfSheets; i++){
-            var sheet = wb.getSheetAt(i);
-            var numberOfColumns = getNumberOfColumns(sheet);
-            for(var j = 0; j < numberOfColumns; j++){
-                if (sheet instanceof SXSSFSheet) {
-                    ((SXSSFSheet) sheet).trackColumnForAutoSizing(j);
+        var numberOfSheets = workbook.getNumberOfSheets();
+        for (int i = 0; i < numberOfSheets; i++) {
+            var sheet = workbook.getSheetAt(i);
+            sheet.getTopRow()
+            if (sheet.getPhysicalNumberOfRows() > 0) {
+                var row = sheet.getRow(sheet.getFirstRowNum());
+                if(row != null){
+                    var cellIterator = row.cellIterator();
+                    while (cellIterator.hasNext()) {
+                        var cell = cellIterator.next();
+                        int columnIndex = cell.getColumnIndex();
+                        if (sheet instanceof SXSSFSheet) {
+                            ((SXSSFSheet) sheet).trackColumnForAutoSizing(columnIndex);
+                        }
+                        sheet.autoSizeColumn(columnIndex);
+                    }
                 }
-                sheet.autoSizeColumn(j);
             }
         }
     }
