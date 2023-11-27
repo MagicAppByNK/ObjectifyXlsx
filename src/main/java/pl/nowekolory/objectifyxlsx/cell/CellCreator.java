@@ -78,9 +78,13 @@ public class CellCreator {
     }
 
     private void addCell(Row row, Double value, Integer cellIndex, CellStyle cellStyle) {
-        var cell = row.createCell(cellIndex);
-        cell.setCellValue(value);
-        cell.setCellStyle(cellStyle);
+        if(value == 0.0){
+            addEmptyCell(row, cellIndex, cellStyle);
+        }else {
+            var cell = row.createCell(cellIndex);
+            cell.setCellValue(value);
+            cell.setCellStyle(cellStyle);
+        }
     }
 
     private void addCell(Row row, Long value, Integer cellIndex, CellStyle cellStyle) {
