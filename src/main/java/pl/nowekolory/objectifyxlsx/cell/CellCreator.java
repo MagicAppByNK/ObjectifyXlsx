@@ -78,9 +78,9 @@ public class CellCreator {
     }
 
     private void addCell(Row row, Double value, Integer cellIndex, CellStyle cellStyle) {
-        if(value == 0.0){
+        if (value == 0.0) {
             addEmptyCell(row, cellIndex, cellStyle);
-        }else {
+        } else {
             var cell = row.createCell(cellIndex);
             cell.setCellValue(value);
             cell.setCellStyle(cellStyle);
@@ -93,8 +93,12 @@ public class CellCreator {
     }
 
     private void addCell(Row row, Float value, Integer cellIndex, CellStyle cellStyle) {
-        row.createCell(cellIndex).setCellValue(value);
-        row.getCell(cellIndex).setCellStyle(cellStyle);
+        if (value == 0.0) {
+            addEmptyCell(row, cellIndex, cellStyle);
+        } else {
+            row.createCell(cellIndex).setCellValue(value);
+            row.getCell(cellIndex).setCellStyle(cellStyle);
+        }
     }
 
     private void addCell(CellStyle cellStyle, Row row, LocalDateTime value, Integer cellIndex) {

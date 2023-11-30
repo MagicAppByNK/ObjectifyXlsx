@@ -9,8 +9,11 @@ import java.util.Locale;
 
 public class CellStyleCreator{
 
-    private static final String defaultDateFormat = "M.d.yy";
-    private static final String defaultDateTimeFormat = "M.d.yy h:mm";
+    /**
+     * Data format should be compliant with the Excel standard
+     */
+    private static final String defaultDateFormat = "d.M.yy";
+    private static final String defaultDateTimeFormat = "d.M.yy h:mm";
 
     public static CellStyle createDefaultCellStyle(Workbook workbook){
         return workbook.createCellStyle();
@@ -39,7 +42,7 @@ public class CellStyleCreator{
 
     public static CellStyle createDateCellStyle(Workbook workbook, String format){
         var dateCellStyle = workbook.createCellStyle();
-        var stringFormat = getFormat(format, DateFormatConverter.convert(Locale.getDefault(), "dd.MM.yyyy"));
+        var stringFormat = getFormat(format, DateFormatConverter.convert(new Locale("pl"), defaultDateFormat));
         var dateFormat = workbook.getCreationHelper().createDataFormat().getFormat(stringFormat);
         dateCellStyle.setDataFormat(dateFormat);
         return dateCellStyle;
