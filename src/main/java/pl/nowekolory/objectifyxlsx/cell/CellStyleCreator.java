@@ -18,7 +18,10 @@ public class CellStyleCreator{
     public static CellStyle createDefaultCellStyle(Workbook workbook){
         return workbook.createCellStyle();
     }
-    public static CellStyle createFormatedCellStyle(Workbook workbook, Boolean roundDouble, HorizontalAlignment horizontalAlignment, Boolean boldFont){
+
+    public static CellStyle createFormatedCellStyle(Workbook workbook, Boolean roundDouble,
+                                                    HorizontalAlignment horizontalAlignment,
+                                                    Boolean boldFont){
         var cellStyle = workbook.createCellStyle();
         cellStyle.setAlignment(horizontalAlignment);
         if(boldFont){
@@ -32,6 +35,7 @@ public class CellStyleCreator{
         }
         return cellStyle;
     }
+
     public static CellStyle createDateTimeCellStyle(Workbook workbook, String format){
         var dateTimeCellStyle = workbook.createCellStyle();
         var stringFormat = getFormat(format, defaultDateTimeFormat);
@@ -42,7 +46,8 @@ public class CellStyleCreator{
 
     public static CellStyle createDateCellStyle(Workbook workbook, String format){
         var dateCellStyle = workbook.createCellStyle();
-        var stringFormat = getFormat(format, DateFormatConverter.convert(new Locale("pl"), defaultDateFormat));
+        var stringFormat = getFormat(format,
+                                     DateFormatConverter.convert(new Locale("pl"), defaultDateFormat));
         var dateFormat = workbook.getCreationHelper().createDataFormat().getFormat(stringFormat);
         dateCellStyle.setDataFormat(dateFormat);
         return dateCellStyle;
