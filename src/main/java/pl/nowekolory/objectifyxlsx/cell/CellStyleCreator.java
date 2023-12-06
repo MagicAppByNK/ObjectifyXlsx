@@ -46,8 +46,9 @@ public class CellStyleCreator{
 
     public static CellStyle createDateCellStyle(Workbook workbook, String format){
         var dateCellStyle = workbook.createCellStyle();
+        var usLocale = new Locale.Builder().setLanguage("en").setRegion("US").build();
         var stringFormat = getFormat(format,
-                                     DateFormatConverter.convert(new Locale("pl"), defaultDateFormat));
+                                     DateFormatConverter.convert(usLocale, defaultDateFormat));
         var dateFormat = workbook.getCreationHelper().createDataFormat().getFormat(stringFormat);
         dateCellStyle.setDataFormat(dateFormat);
         return dateCellStyle;
