@@ -14,6 +14,8 @@ public class CellStyleCreator{
      */
     private static final String defaultDateFormat = "d.M.yy";
     private static final String defaultDateTimeFormat = "d.M.yy h:mm";
+    private static final Locale usLocale = new Locale.Builder().setLanguage("en").setRegion("US")
+            .build();
 
     public static CellStyle createDefaultCellStyle(Workbook workbook){
         return workbook.createCellStyle();
@@ -46,7 +48,6 @@ public class CellStyleCreator{
 
     public static CellStyle createDateCellStyle(Workbook workbook, String format){
         var dateCellStyle = workbook.createCellStyle();
-        var usLocale = new Locale.Builder().setLanguage("en").setRegion("US").build();
         var stringFormat = getFormat(format,
                                      DateFormatConverter.convert(usLocale, defaultDateFormat));
         var dateFormat = workbook.getCreationHelper().createDataFormat().getFormat(stringFormat);
