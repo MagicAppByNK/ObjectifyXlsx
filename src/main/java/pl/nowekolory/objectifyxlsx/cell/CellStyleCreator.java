@@ -3,19 +3,14 @@ package pl.nowekolory.objectifyxlsx.cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.DateFormatConverter;
-
-import java.util.Locale;
 
 public class CellStyleCreator{
 
     /**
      * Data format should be compliant with the Excel standard
      */
-    private static final String defaultDateFormat = "d.M.yy";
-    private static final String defaultDateTimeFormat = "d.M.yy h:mm";
-    private static final Locale usLocale = new Locale.Builder().setLanguage("en").setRegion("US")
-            .build();
+    private static final String defaultDateFormat = "dd-mm-yyyy;@";
+    private static final String defaultDateTimeFormat = "dd-mm-yy h:mm;@";
 
     public static CellStyle createDefaultCellStyle(Workbook workbook){
         return workbook.createCellStyle();
@@ -40,18 +35,17 @@ public class CellStyleCreator{
 
     public static CellStyle createDateTimeCellStyle(Workbook workbook, String format){
         var dateTimeCellStyle = workbook.createCellStyle();
-        var stringFormat = getFormat(format, defaultDateTimeFormat);
-        var dateTimeFormat = workbook.getCreationHelper().createDataFormat().getFormat(stringFormat);
-        dateTimeCellStyle.setDataFormat(dateTimeFormat);
+        var createHelper = workbook.getCreationHelper();
+        dateTimeCellStyle.setDataFormat(
+                createHelper.createDataFormat().getFormat(defaultDateTimeFormat));
         return dateTimeCellStyle;
     }
 
     public static CellStyle createDateCellStyle(Workbook workbook, String format){
         var dateCellStyle = workbook.createCellStyle();
-        var stringFormat = getFormat(format,
-                                     DateFormatConverter.convert(usLocale, defaultDateFormat));
-        var dateFormat = workbook.getCreationHelper().createDataFormat().getFormat(stringFormat);
-        dateCellStyle.setDataFormat(dateFormat);
+        var createHelper = workbook.getCreationHelper();
+        dateCellStyle.setDataFormat(
+                createHelper.createDataFormat().getFormat(defaultDateFormat));
         return dateCellStyle;
     }
 

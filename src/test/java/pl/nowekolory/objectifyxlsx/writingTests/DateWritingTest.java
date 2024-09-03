@@ -7,6 +7,7 @@ import pl.nowekolory.objectifyxlsx.header.ReportHeader;
 
 import java.io.FileOutputStream;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class DateWritingTest {
@@ -15,8 +16,9 @@ public class DateWritingTest {
         try(var workbook = new SXSSFWorkbook()){
             var excelWriter = new ExcelWriter(workbook);
             var dateList = new ArrayList<TestDateClass>();
-            var date = LocalDate.of(2012,9,12);
-            var testDateClass = new TestDateClass(date);
+            var date = LocalDate.now();
+            var dateTime = LocalDateTime.now();
+            var testDateClass = new TestDateClass(date,dateTime);
             dateList.add(testDateClass);
             excelWriter.createSheet(dateList,"test");
             var out = new FileOutputStream("src/test/resources/dateTest.xlsx");
@@ -29,11 +31,17 @@ public class DateWritingTest {
     class TestDateClass{
         @ReportHeader(name = "Date")
         LocalDate date;
-        public TestDateClass(LocalDate date){
+        @ReportHeader(name = "DateTime")
+        LocalDateTime dateTime;
+        public TestDateClass(LocalDate date, LocalDateTime dateTime){
             this.date = date;
+            this.dateTime = dateTime;
         }
         public LocalDate getDate(){
             return date;
+        }
+        public LocalDateTime getDateTime(){
+            return dateTime;
         }
     }
 }
