@@ -9,6 +9,7 @@ import pl.nowekolory.objectifyxlsx.row.RowCreator;
 
 
 import java.util.List;
+import java.util.Optional;
 
 public class ExcelWriter {
 
@@ -35,8 +36,26 @@ public class ExcelWriter {
     }
 
     public void createSheet(List<?> objectsToWrite, String name) {
-        if (objectsToWriteNotExist(objectsToWrite)) {
+        createSheetAndReturn(objectsToWrite, name);
+    }
+
+    public void createSheet(List<?> objectsToWrite, String name, short fontHeightInPoints) {
+        var sheet = createSheetAndReturn(objectsToWrite, name);
+        if(sheet.isEmpty()){
             return;
+        }
+        var font = workbook.createFont();
+        font.setFontHeightInPoints(fontHeightInPoints);
+        var cellStyle = workbook.createCellStyle();
+        cellStyle.setFont(font);
+        sheet.get().forEach(
+                row -> row.forEach(
+                        cell -> cell.setCellStyle(cellStyle)));
+    }
+
+    private Optional<Sheet> createSheetAndReturn(List<?> objectsToWrite, String name) {
+        if (objectsToWriteNotExist(objectsToWrite)) {
+            return Optional.empty();
         }
 
         var objectsToWriteClazz = objectsToWrite.get(0).getClass();
@@ -45,6 +64,7 @@ public class ExcelWriter {
 
         HeaderCreator.createHeader(sheet, workbook, objectsToWriteClazz);
         createRows(sheet, objectsToWrite);
+        return Optional.of(sheet);
     }
 
     public void resizeColumns() {
