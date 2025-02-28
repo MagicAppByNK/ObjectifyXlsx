@@ -25,6 +25,9 @@ public class HeaderCreator{
         var cellIndex = 0;
         var headerCellStyle = CellStyleCreator.createHeaderCellStyle(workbook);
         for(var title : headersValues){
+            if (title == null) {
+                title = "";
+            }
             var utf8Title = new String(title.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
             cellCreator.addCell(row, utf8Title, cellIndex);
             cellIndex++;
