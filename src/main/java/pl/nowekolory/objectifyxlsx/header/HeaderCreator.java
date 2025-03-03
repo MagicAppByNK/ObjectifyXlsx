@@ -6,6 +6,7 @@ import pl.nowekolory.objectifyxlsx.cell.CellCreator;
 import pl.nowekolory.objectifyxlsx.cell.CellStyleCreator;
 
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +25,11 @@ public class HeaderCreator{
         var cellIndex = 0;
         var headerCellStyle = CellStyleCreator.createHeaderCellStyle(workbook);
         for(var title : headersValues){
-            cellCreator.addCell(row, title, cellIndex);
+            if (title == null) {
+                title = "";
+            }
+            var utf8Title = new String(title.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+            cellCreator.addCell(row, utf8Title, cellIndex);
             cellIndex++;
         }
         for(var i = 0; i < headersValues.size(); i++){

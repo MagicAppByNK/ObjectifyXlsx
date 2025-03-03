@@ -8,6 +8,7 @@ import pl.nowekolory.objectifyxlsx.header.HeaderCreator;
 import pl.nowekolory.objectifyxlsx.row.RowCreator;
 
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class ExcelWriter {
@@ -98,7 +99,7 @@ public class ExcelWriter {
         if (name == null || name.isBlank()) {
             return clazz.getName();
         }
-        return name;
+        return new String(name.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
     }
 
     private void createRows(Sheet sheet, List<?> objectsToWrite) {
