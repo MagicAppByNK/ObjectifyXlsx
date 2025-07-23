@@ -79,7 +79,7 @@ public class ToPdfWriter{
             document.add(table);
             document.newPage();
         } catch (DocumentException e) {
-            throw new RuntimeException("Błąd podczas tworzenia pliku PDF: " + e.getMessage(), e);
+            throw new RuntimeException("Error while creating PDF file: " + e.getMessage(), e);
         }
     }
 
