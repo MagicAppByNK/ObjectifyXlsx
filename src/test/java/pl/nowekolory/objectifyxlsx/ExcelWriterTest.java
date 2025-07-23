@@ -1,6 +1,5 @@
 package pl.nowekolory.objectifyxlsx;
 
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.junit.jupiter.api.Test;
 
