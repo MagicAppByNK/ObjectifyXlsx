@@ -60,10 +60,10 @@ public class XlsxWritingTest{
     }
 
     private CmrPdfTestData createData(String index) {
-        return new CmrPdfTestData(index, "UNICORN", "CLN101132858181", "12EX1",
-                                  "Sameday", "5EHULN18732793", "DELIVERED",
-                                  "Gerőcs Gábor", "HU", "Törökszentmiklós,\nSurjány ",
-                                  "Almássy út 46-48 [EasyBox #14797]", LocalDate.now(), LocalDate.now());
+        return new CmrPdfTestData(index, "UHNIKOŃ", "CLN10113285000", "12EX1",
+                                  "Sameday", "5EHULN1873000", "DELIVERED", LocalDate.now(), LocalDate.now(),
+                                  "Marek Mostowiak", "HU", "Törökszentmiklós,\nSurjány ",
+                                  "Almássy út 46-48 [EasyBox #14797]");
     }
 
 }

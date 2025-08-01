@@ -23,14 +23,21 @@ public class ReportFileCreator{
     private Workbook workbook ;
     private FileType fileType;
     private ByteArrayOutputStream outputStream;
+    private int fontSize;
+    private boolean newPage = true;
 
     public ReportFileCreator(FileType fileType) {
+        this(fileType, 6);
+    }
+
+    public ReportFileCreator(FileType fileType, int fontSize) {
         this.fileType = fileType;
         this.outputStream = new ByteArrayOutputStream();
         if (FileType.PDF == fileType) {
             this.pdfDocument = new Document(PageSize.A4.rotate());
             this.workbook = null;
-            new ToPdfWriter(outputStream).initPDF(pdfDocument);
+            this.fontSize = fontSize;
+            new ToPdfWriter(outputStream, fontSize).initPDF(pdfDocument);
         } else {
             this.pdfDocument = null;
             this.workbook = new XSSFWorkbook();
@@ -45,10 +52,50 @@ public class ReportFileCreator{
         }
     }
 
+    public void newPagePdf() {
+        if (FileType.XLSX == fileType) {
+            return;
+        }
+        final var outputStream = new ByteArrayOutputStream();
+        new ToPdfWriter(outputStream, fontSize).newPagePdf(pdfDocument);
+    }
+
+    public void addHeaderToPDF(String headerText, int fontSize) {
+        if (FileType.XLSX == fileType) {
+            return;
+        }
+        final var outputStream = new ByteArrayOutputStream();
+        new ToPdfWriter(outputStream, fontSize).addHeaderToPDF(headerText, pdfDocument);
+    }
+
+    public void addCompaniesToPDF(String leftCompany, String rightCompany, int fontSize) {
+        if (FileType.XLSX == fileType) {
+            return;
+        }
+        final var outputStream = new ByteArrayOutputStream();
+        new ToPdfWriter(outputStream, fontSize).addCompaniesToPDF(leftCompany, rightCompany, pdfDocument);
+    }
+
+    public void addIssueDateToPDF(String issueDateText, int fontSize) {
+        if (FileType.XLSX == fileType) {
+            return;
+        }
+        final var outputStream = new ByteArrayOutputStream();
+        new ToPdfWriter(outputStream, fontSize).addIssueDateToPDF(issueDateText, pdfDocument);
+    }
+
+    public void addImageToPDF(byte[] imageBytes, int width, int height, int alignment, int margin) {
+        if (FileType.XLSX == fileType) {
+            return;
+        }
+        final var outputStream = new ByteArrayOutputStream();
+        new ToPdfWriter(outputStream, fontSize).addImageToPDF(imageBytes, width, height, alignment, margin, pdfDocument);
+    }
+
     public byte[] getFileBytes() {
         try {
             if (FileType.PDF == fileType) {
-                new ToPdfWriter(outputStream).closePdf(pdfDocument);
+                new ToPdfWriter(outputStream, fontSize).closePdf(pdfDocument);
             } else {
                 workbook.write(outputStream);
             }
@@ -69,8 +116,7 @@ public class ReportFileCreator{
 
     private void addDataToPdf(List<?> objectsToWrite, String sheetName) {
         final var outputStream = new ByteArrayOutputStream();
-        final var pdfWriter = new ToPdfWriter(outputStream);
-        pdfWriter.addDataToPDF(objectsToWrite, sheetName, pdfDocument);
+        new ToPdfWriter(outputStream, fontSize).addDataToPDF(objectsToWrite, sheetName, pdfDocument);
     }
 
 }
