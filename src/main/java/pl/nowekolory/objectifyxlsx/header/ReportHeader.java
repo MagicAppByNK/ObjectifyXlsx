@@ -11,4 +11,8 @@ public @interface ReportHeader{
     String name();
 
     int position() default -1;
+    boolean multiline() default true;
+    boolean inPDF() default true;
+    float columnWidthPdf() default 1;
+
 }
