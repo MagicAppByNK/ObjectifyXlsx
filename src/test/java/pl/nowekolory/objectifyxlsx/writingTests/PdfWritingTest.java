@@ -12,7 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Base64;
 
 public class PdfWritingTest{
 
@@ -82,7 +81,7 @@ public class PdfWritingTest{
         for(var i = 1; i < 101; i++){
             dateList.add(createData(String.valueOf(i)));
         }
-        fileCreator.addDataToFile(dateList, "");
+        fileCreator.addDataToFile(dateList, "", true);
         final var img = loadImageFromFile("src/test/java/pl/nowekolory/objectifyxlsx/data/pepe.jpg");
         fileCreator.addImageToPDF(img, 150, 85, Element.ALIGN_RIGHT, 100);
         final var bytes = fileCreator.getFileBytes();
