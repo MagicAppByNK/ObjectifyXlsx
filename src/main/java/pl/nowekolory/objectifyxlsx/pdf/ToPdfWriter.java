@@ -39,7 +39,7 @@ public class ToPdfWriter{
         document.open();
     }
 
-    public void addDataToPDF(List<?> objectsToWrite, String name, Document document) {
+    public void addDataToPDF(List<?> objectsToWrite, String name, Document document, boolean tableHeaders) {
         if(objectsToWrite.isEmpty()){
             addTitlePage(noDataMessage, document);
             return;
@@ -54,6 +54,9 @@ public class ToPdfWriter{
 
             table.setWidthPercentage(100);
             table.setSpacingBefore(0);
+            if (tableHeaders) {
+                table.setHeaderRows(1);
+            }
 
             final var columnWidths = getColumnWidths(objectsToWriteClazz, headers.size());
             table.setWidths(columnWidths);

@@ -45,8 +45,12 @@ public class ReportFileCreator{
     }
 
     public void addDataToFile(List<?> objectsToWrite, String sheetName) {
+        addDataToFile(objectsToWrite, sheetName, false);
+    }
+
+    public void addDataToFile(List<?> objectsToWrite, String sheetName, boolean tableHeaders) {
         if (FileType.PDF == fileType) {
-            addDataToPdf(objectsToWrite, sheetName);
+            addDataToPdf(objectsToWrite, sheetName, tableHeaders);
         } else {
             addDataToExcel(objectsToWrite, sheetName);
         }
@@ -114,9 +118,9 @@ public class ReportFileCreator{
         excelWriter.resizeColumns();
     }
 
-    private void addDataToPdf(List<?> objectsToWrite, String sheetName) {
+    private void addDataToPdf(List<?> objectsToWrite, String sheetName, boolean tableHeaders) {
         final var outputStream = new ByteArrayOutputStream();
-        new ToPdfWriter(outputStream, fontSize).addDataToPDF(objectsToWrite, sheetName, pdfDocument);
+        new ToPdfWriter(outputStream, fontSize).addDataToPDF(objectsToWrite, sheetName, pdfDocument, tableHeaders);
     }
 
 }
