@@ -63,7 +63,7 @@ public class ToPdfWriter{
 
             for (var header : headers) {
                 final var headerCell = new PdfPCell(new Phrase(header, new Font(Font.HELVETICA, fontSize, Font.NORMAL)));
-                headerCell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 headerCell.setBackgroundColor(Color.LIGHT_GRAY);
                 headerCell.setBorder(Rectangle.NO_BORDER);
                 table.addCell(headerCell);
