@@ -1,13 +1,14 @@
 package pl.nowekolory.objectifyxlsx;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.PageSize;
+
 import lombok.Data;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openpdf.text.Document;
+import org.openpdf.text.PageSize;
 import pl.nowekolory.objectifyxlsx.enums.FileType;
 import pl.nowekolory.objectifyxlsx.pdf.ToPdfWriter;
 

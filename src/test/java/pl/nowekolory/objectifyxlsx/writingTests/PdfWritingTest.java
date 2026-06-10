@@ -1,7 +1,7 @@
 package pl.nowekolory.objectifyxlsx.writingTests;
 
-import com.lowagie.text.Element;
 import org.junit.jupiter.api.Test;
+import org.openpdf.text.Element;
 import pl.nowekolory.objectifyxlsx.ReportFileCreator;
 import pl.nowekolory.objectifyxlsx.data.CmrPdfTestData;
 import pl.nowekolory.objectifyxlsx.enums.FileType;
