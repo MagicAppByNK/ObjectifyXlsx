@@ -1,16 +1,22 @@
 package pl.nowekolory.objectifyxlsx.pdf;
 
-import com.lowagie.text.*;
-import com.lowagie.text.Font;
-import com.lowagie.text.Image;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
+
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.poi.util.StringUtil;
+import org.openpdf.text.Document;
+import org.openpdf.text.DocumentException;
+import org.openpdf.text.Element;
+import org.openpdf.text.Font;
+import org.openpdf.text.Image;
+import org.openpdf.text.Paragraph;
+import org.openpdf.text.Phrase;
+import org.openpdf.text.Rectangle;
+import org.openpdf.text.pdf.PdfPCell;
+import org.openpdf.text.pdf.PdfPTable;
+import org.openpdf.text.pdf.PdfWriter;
 import pl.nowekolory.objectifyxlsx.header.ExternalObject;
 import pl.nowekolory.objectifyxlsx.header.ReportHeader;
+
 
 import java.awt.*;
 import java.lang.reflect.Field;
